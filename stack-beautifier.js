@@ -71,8 +71,11 @@ function main(program) {
 }
 
 function processMatchedLine(match, sourceMapConsumer) {
-  const { name, line, column } = match;
-  return sourceMapConsumer.originalPositionFor({line, column, name});
+  return sourceMapConsumer.originalPositionFor({
+    line: Number(match.line),
+    column: Number(match.column || 0),
+    name: match.name
+  });
 }
 
 function matchStackLine(line) {
@@ -103,7 +106,7 @@ function processStack(lines, sourceMapConsumer) {
         // we treat empty stack trace line as the end of an input
         break;
       } else {
-        throw new Error(`Stack trace parse error at line ${i+1}: ${line}`);
+        throw new Error('Stack trace parse error at line ' + (i + 1) + ': ' + line);
       }
     } else {
       result.push(processMatchedLine(match, sourceMapConsumer));
@@ -112,7 +115,7 @@ function processStack(lines, sourceMapConsumer) {
   return result;
 }
 
-function formatStack(lines, shorten = true) {
+function formatStack(lines, shorten) {
   let replacePrefix = '';
   if (shorten) {
     const sources = lines.filter(r => r.source).map(r => r.source);
@@ -134,9 +137,9 @@ function formatStack(lines, shorten = true) {
     } else {
       const source = (replacePrefix && r.source.startsWith(replacePrefix)) ? './' + r.source.slice(replacePrefix.length) : r.source;
       if (r.name) {
-        return `  at ${r.name} (${source}:${r.line}:${r.column})`;
+        return '  at ' + r.name + ' (' + source + ':' + r.line + ':' + r.column + ')';
       } else {
-        return `  at ${source}:${r.line}:${r.column}`;
+        return '  at ' + source + ':' + r.line + ':' + r.column;
       }
     }
   }).join('\n');
