@@ -70,13 +70,13 @@ Note that it has to be added before the `apply from: "../../node_modules/react-n
 If you don't have access to the source map file there is still hope. You can checkout the version at which the bundle has been generated and run the following command for android:
 
 ```bash
-react-native bundle --platform android --entry-file index.android.js --dev false --reset-cache --bundle-output /dev/null --assets-dest /tmp/ --sourcemap-output index.android.js.map
+react-native bundle --platform android --entry-file index.js --dev false --reset-cache --bundle-output /tmp/bundle.android.js --assets-dest /tmp/ --sourcemap-output index.android.js.map
 ```
 
 or for iOS:
 
 ```bash
-react-native bundle --platform ios --entry-file index.ios.js --dev false --reset-cache --bundle-output /dev/null --assets-dest /tmp/ --sourcemap-output index.ios.js.map
+react-native bundle --platform ios --entry-file index.js --dev false --reset-cache --bundle-output /tmp/bundle.ios.js --assets-dest /tmp/ --sourcemap-output index.ios.js.map
 ```
 
 Note that it is crutial that all the dependencies from `node_module` are at the same version as when the JS bundle has been generated, otherwise the source map may not give you the correct mapping. We recommend using [yarn](https://yarnpkg.com/) that helps in ensuring reproducable JS bundle builds.
