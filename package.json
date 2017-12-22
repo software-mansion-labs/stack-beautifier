@@ -1,6 +1,6 @@
 {
   "name": "stack-beautifier",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tool for decrypting stack traces coming from the minified JS code",
   "repository": {
     "type": "git",
